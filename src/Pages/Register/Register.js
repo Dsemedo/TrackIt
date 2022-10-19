@@ -16,15 +16,17 @@ export default function Register() {
     password: "",
   });
 
-  function handleForm(e) {
+  function handleRegister(e) {
     setForms({
       ...forms,
       [e.target.name]: e.target.value,
     });
+    console.log(forms);
   }
 
   function submitUser(e) {
     e.preventDefault();
+
     const promise = axios.post(`${BASE_URL}/auth/sign-up`, forms);
 
     promise.then(() => navigate("/"));
@@ -36,25 +38,29 @@ export default function Register() {
       <Form onSubmit={submitUser}>
         <Logo alt="LogoTrackIt" src={LogoTrack} />
         <input
-          onChange={handleForm}
+          name="email"
+          onChange={handleRegister}
           type="email"
           placeholder="email"
           value={forms.email}
         />
         <input
-          onChange={handleForm}
+          name="password"
+          onChange={handleRegister}
           type="password"
           placeholder="senha"
           value={forms.password}
         />
         <input
-          onChange={handleForm}
+          name="name"
+          onChange={handleRegister}
           type="text"
           placeholder="nome"
           value={forms.name}
         />
         <input
-          onChange={handleForm}
+          name="image"
+          onChange={handleRegister}
           type="url"
           placeholder="foto"
           value={forms.image}
