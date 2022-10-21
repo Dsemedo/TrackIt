@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import LogoTrack from "../../Services/img/LogoTrackIt.jpg";
-import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../constants/urls";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import HabitCreated from "./HabitCreated";
 import colors from "../../constants/colors";
+import HabitoNovo from "./CreateHabit";
 
 export default function Habits() {
   const { AzulClaro, AzulEscuro, Cinza, Verde, Branco } = colors;
@@ -14,8 +14,6 @@ export default function Habits() {
   const [createHabit, setCreateHabit] = useState(false);
 
   const Letters = ["D", "S", "T", "Q", "Q", "S", "S"];
-
-  console.log(habitos);
 
   useEffect(() => {
     const config = {
@@ -29,7 +27,6 @@ export default function Habits() {
 
       .then((res) => {
         setHabitos(res.data);
-
         console.log(res.data);
       })
 
@@ -45,7 +42,13 @@ export default function Habits() {
         começar a trackear!
       </h2>
     ) : (
-      <HabitCreated habitos={habitos} Letters={Letters} />
+      <HabitCreated
+        habitos={habitos}
+        setHabitos={setHabitos}
+        Letters={Letters}
+        setCreateHabit={setCreateHabit}
+        createHabit={createHabit}
+      />
     );
   }
 
@@ -60,33 +63,16 @@ export default function Habits() {
           <h1>Meus Hábitos</h1>
           <button onClick={() => setCreateHabit(!createHabit)}>+</button>
         </TopContent>
+
+        {createHabit ? <HabitoNovo Letters={Letters} /> : ""}
+
         <ViewHabits />
-
-        {createHabit ? (
-          <HabitoNovo>
-            <input />
-            <TopNewHabit>
-              {Letters.map((letter, i) => (
-                <Day key={i}>
-                  <h1>{letter}</h1>
-                </Day>
-              ))}
-            </TopNewHabit>
-
-            <BottomNewHabit>
-              <h2>Cancelar</h2>
-              <button>Salvar</button>
-            </BottomNewHabit>
-          </HabitoNovo>
-        ) : (
-          ""
-        )}
       </Content>
 
       <Footer>
-        <h1>a</h1>
-        <h1>a</h1>
-        <h1>a</h1>
+        <h1>Hábitos</h1>
+        <h1>Hoje</h1>
+        <h1>Histórico</h1>
       </Footer>
     </Container>
   );
@@ -138,7 +124,7 @@ const Content = styled.div`
   align-items: center;
 
   h2 {
-    margin: 0 10px 0 10px;
+    margin: 0 10px 0 25px;
     font-family: "Lexend Deca", sans-serif;
     font-size: 18px;
     color: #666666;
@@ -184,70 +170,5 @@ const TopContent = styled.div`
     &:hover {
       cursor: pointer;
     }
-  }
-`;
-
-const HabitoNovo = styled.div`
-  margin-top: 5%;
-  width: 90%;
-  height: 160px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-direction: column;
-  background-color: #f5f5f5;
-  border-radius: 3px;
-
-  h1 {
-    font-family: "Lexend Deca", sans-serif;
-    font-size: 20px;
-    color: #666666;
-  }
-
-  input {
-    width: 90%;
-    height: 45px;
-    border: 1px solid #d5d5d5;
-    border-radius: 5px;
-    margin-left: 5%;
-    flex-wrap: wrap;
-  }
-`;
-
-const Day = styled.button`
-  background-color: ${(props) => props.backColor};
-  width: 25px;
-  height: 25px;
-  margin-right: 5px;
-  border: 1px solid #cfcfcf;
-  border-radius: 4px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  h1 {
-    color: ${(props) => props.colorText};
-  }
-`;
-
-const TopNewHabit = styled.div`
-  display: flex;
-  justify-content: start;
-  align-items: flex-start;
-  flex-direction: row;
-  margin: 4% 0 6% 5%;
-`;
-
-const BottomNewHabit = styled.div`
-  display: flex;
-  align-items: center;
-  margin-left: 40%;
-
-  button {
-    width: 84px;
-    height: 35px;
-    background-color: #52b6ff;
-    border-radius: 4px;
-    border: none;
   }
 `;

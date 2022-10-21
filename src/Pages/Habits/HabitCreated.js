@@ -2,15 +2,38 @@ import React from "react";
 import styled from "styled-components";
 import Trash from "../../Services/img/TrashIcon.png";
 import colors from "../../constants/colors";
+import axios from "axios";
 
-export default function HabitCreated({ habitos, Letters }) {
-  const { AzulClaro, AzulEscuro, Cinza, Verde, Branco } = colors;
+export default function HabitCreated({ setHabitos, habitos, Letters }) {
+  const { Cinza, Branco } = colors;
+
+  function deleteHabit(id) {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
+
+    const requisicao = axios.delete(
+      `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`,
+      config
+    );
+
+    requisicao.then(() => {
+      setHabitos(habitos.filter((habito) => habito.id !== id));
+      alert("Hábito apagado!");
+    });
+  }
 
   return habitos.map((habito) => (
     <Habit key={habito.id}>
       <TopHabit>
         <h1>{habito.name}</h1>
-        <img alt="Icone para deletar habito" src={Trash} />
+        <img
+          alt="Icone para deletar habito"
+          src={Trash}
+          onClick={() => deleteHabit(habito.id)}
+        />
       </TopHabit>
 
       <BottomHabit>
