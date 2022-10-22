@@ -6,8 +6,10 @@ import axios from "axios";
 import HabitCreated from "./HabitCreated";
 import colors from "../../constants/colors";
 import HabitoNovo from "./CreateHabit";
+import { useNavigate } from "react-router-dom";
 
 export default function Habits() {
+  const navigate = useNavigate();
   const { AzulClaro, AzulEscuro, Cinza, Verde, Branco } = colors;
 
   const [habitos, setHabitos] = useState([]);
@@ -22,18 +24,13 @@ export default function Habits() {
       },
     };
 
-    axios
-      .get(`${BASE_URL}/habits`, config)
+    const promise = axios.get(`${BASE_URL}/habits`, config);
 
-      .then((res) => {
-        setHabitos(res.data);
-        console.log(res.data);
-      })
-
-      .catch((erro) => {
-        console.log(erro.res.data);
-      });
-  }, []);
+    promise.then((res) => {
+      setHabitos(res.data);
+      console.log(res.data);
+    });
+  }, [setHabitos]);
 
   function ViewHabits() {
     return habitos.length === 0 ? (
@@ -70,9 +67,9 @@ export default function Habits() {
       </Content>
 
       <Footer>
-        <h1>Hábitos</h1>
-        <h1>Hoje</h1>
-        <h1>Histórico</h1>
+        <h1 onClick={() => navigate("/habitos")}>Hábitos</h1>
+        <h1 onClick={() => navigate("/hoje")}>Hoje</h1>
+        <h1 onClick={() => navigate("/historico")}>Histórico</h1>
       </Footer>
     </Container>
   );
@@ -115,6 +112,13 @@ const Footer = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
+
+  h1 {
+    color: #52b6ff;
+    font-family: "Lexend Deca", sans-serif;
+    font-size: 18px;
+    cursor: pointer;
+  }
 `;
 
 const Content = styled.div`
@@ -166,9 +170,6 @@ const TopContent = styled.div`
     border: none;
     background-color: #52b6ff;
     color: #f5f5f5f5;
-
-    &:hover {
-      cursor: pointer;
-    }
+    cursor: pointer;
   }
 `;

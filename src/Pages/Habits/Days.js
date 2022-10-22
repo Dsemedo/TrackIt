@@ -3,15 +3,8 @@ import { useState } from "react";
 import styled from "styled-components";
 import colors from "../../constants/colors";
 
-export default function Days({
-  setClickedDay,
-  clickedDay,
-  setHabitName,
-  habitName,
-  letter,
-  index,
-}) {
-  const { AzulClaro, AzulEscuro, Cinza, Branco } = colors;
+export default function Days({ setClickedDay, clickedDay, letter, index }) {
+  const { Cinza, Branco } = colors;
 
   const [colorido, setColorido] = useState(false);
 

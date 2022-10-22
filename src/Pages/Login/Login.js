@@ -9,8 +9,6 @@ import axios from "axios";
 export default function Login() {
   const navigate = useNavigate();
 
-  // const [clicado, setClicado] = useState(false);
-
   const [log, setLog] = useState({
     email: "",
     password: "",
@@ -27,17 +25,17 @@ export default function Login() {
   function enterUser(e) {
     e.preventDefault();
 
-    const promise = axios.post(`${BASE_URL}/auth/login`, log);
+    axios
+      .post(`${BASE_URL}/auth/login`, log)
 
-    promise.then((response) => {
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("image", response.data.image);
-      console.log(response.data);
-      navigate("/habitos");
-    });
-    promise.catch((response) => {
-      alert("Email e/ou senha inválidos");
-    });
+      .then((response) => {
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("image", response.data.image);
+        navigate("/habitos");
+      })
+      .catch(() => {
+        alert("Email e/ou senha inválidos");
+      });
   }
 
   return (
@@ -110,62 +108,3 @@ const StyledLink = styled(Link)`
   font-size: 14px;
   font-family: "Lexend Deca", sans-serif;
 `;
-
-// function EstadoBotões() {
-//   if (clicado === true) {
-//     return (
-//       <>
-//         <input
-//           disabled
-//           name="email"
-//           onChange={handleLogin}
-//           type="email"
-//           placeholder="email"
-//           value={log.email}
-//         />
-//         <input
-//           disabled
-//           name="password"
-//           onChange={handleLogin}
-//           type="password"
-//           placeholder="senha"
-//           value={log.password}
-//         />
-
-//         <ButtLogin type="submit" disabled>
-//           <ThreeDots
-//             height="80"
-//             width="80"
-//             radius="9"
-//             color="#FFFFFF"
-//             ariaLabel="three-dots-loading"
-//             wrapperStyle={{}}
-//             wrapperClassName=""
-//             visible={true}
-//           />
-//         </ButtLogin>
-//       </>
-//     );
-//   } else {
-//     return (
-//       <>
-//         <input
-//           name="email"
-//           onChange={handleLogin}
-//           type="email"
-//           placeholder="email"
-//           value={log.email}
-//         />
-//         <input
-//           name="password"
-//           onChange={handleLogin}
-//           type="password"
-//           placeholder="senha"
-//           value={log.password}
-//         />
-
-//         <ButtLogin type="submit">Entrar</ButtLogin>
-//       </>
-//     );
-//   }
-// }

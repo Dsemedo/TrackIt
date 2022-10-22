@@ -5,6 +5,7 @@ import GlobalStyle from "./Services/GlobalStyle";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import UserContext from "./context/UserContext";
 import { useState } from "react";
+import Today from "./Pages/Today/Today";
 
 function App() {
   const [user, setUser] = useState({});
@@ -18,6 +19,7 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/cadastro" element={<Register />} />
           <Route path="/habitos" element={<Habits />} />
+          <Route path="/hoje" element={<Today />} />
         </Routes>
       </BrowserRouter>
     </UserContext.Provider>

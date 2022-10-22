@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Trash from "../../Services/img/TrashIcon.png";
 import colors from "../../constants/colors";
 import axios from "axios";
+import { BASE_URL } from "../../constants/urls";
 
 export default function HabitCreated({ setHabitos, habitos, Letters }) {
   const { Cinza, Branco } = colors;
@@ -14,10 +15,7 @@ export default function HabitCreated({ setHabitos, habitos, Letters }) {
       },
     };
 
-    const requisicao = axios.delete(
-      `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`,
-      config
-    );
+    const requisicao = axios.delete(`${BASE_URL}/habits/${id}`, config);
 
     requisicao.then(() => {
       setHabitos(habitos.filter((habito) => habito.id !== id));
@@ -96,6 +94,7 @@ const TopHabit = styled.div`
   img {
     width: 15px;
     height: 15px;
+    cursor: pointer;
   }
 `;
 
@@ -106,7 +105,6 @@ const BottomHabit = styled.div`
 
 const Day = styled.button`
   background-color: ${(props) => props.backColor};
-
   width: 30px;
   height: 30px;
   margin-right: 5px;

@@ -34,7 +34,7 @@ export default function CreateHabit({ Letters, createHabit, setCreateHabit }) {
         }
       )
 
-      .then(alert("Deu tudo certo!"))
+      .then(alert("Deu tudo certo!"), setCreateHabit(!createHabit))
       .catch(alert("hoje não"));
   }
 
@@ -46,6 +46,7 @@ export default function CreateHabit({ Letters, createHabit, setCreateHabit }) {
         type="text"
         placeholder="Digite aqui o seu novo hábito!"
       />
+
       <TopNewHabit>
         {Letters.map((letter, index) => (
           <Day
