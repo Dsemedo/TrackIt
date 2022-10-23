@@ -1,13 +1,39 @@
 import dayjs from "dayjs";
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { BASE_URL } from "../../constants/urls";
+import axios from "axios";
+import { CircularProgressbar } from "react-circular-progressbar";
+import Check from "../../Services/img/Check.png";
+import TodayList from "./TodayList";
+import colors from "../../constants/colors";
 
-export default function Today() {
+export default function Today({ habitDone, setHabitDone }) {
+  const { Cinza, Verde } = colors;
   const navigate = useNavigate();
-  console.log(dayjs());
+  const [todayHabits, setTodayHabits] = useState([]);
+  const percentage = 66;
 
-  function TodayHabits() {}
+  console.log(todayHabits);
+
+  dayjs.locale("pt-br");
+  var now = dayjs().format("dddd, DD/MM");
+
+  useEffect(() => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
+
+    const promise = axios.get(`${BASE_URL}/habits/today`, config);
+
+    promise.then((res) => {
+      setTodayHabits(res.data);
+    });
+  }, [habitDone]);
 
   return (
     <Container>
@@ -16,21 +42,42 @@ export default function Today() {
         <img alt="foto de perfil" src={localStorage.getItem("image")} />
       </Header>
       <Content>
-        <h2>
-          {dayjs().year()} {dayjs().day()}
-        </h2>
-        <h3>Nenhum hábito concluído ainda</h3>
+        <InfoDay>
+          <span>{now}</span>
 
-        <TodayHabits />
+          {{ habitDone }.length === 0 ? (
+            <h3 color={Cinza}>Nenhum hábito concluído ainda</h3>
+          ) : (
+            <h3 color={Verde}>{percentage}% dos hábitos concluídos</h3>
+          )}
+        </InfoDay>
+
+        <TodayList todayHabits={todayHabits} setTodayHabits={setTodayHabits} />
       </Content>
+
       <Footer>
         <h1 onClick={() => navigate("/habitos")}>Hábitos</h1>
+        {/* <ProgressBar
+          value={percentage}
+          text={`${percentage}%`}
+          strokeWidth="2px"
+        /> */}
+
         <h1 onClick={() => navigate("/hoje")}>Hoje</h1>
         <h1 onClick={() => navigate("/historico")}>Histórico</h1>
       </Footer>
     </Container>
   );
 }
+
+// const ProgressBar = styled(CircularProgressbar)`
+//   width: 90px;
+//   height: 80px;
+//   border: 1px solid red;
+//   display: flex;
+
+//   align-items: center;
+// `;
 
 const Container = styled.div`
   width: 100vw;
@@ -66,12 +113,29 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
 
-  h2 {
+const InfoDay = styled.div`
+  margin-bottom: 5%;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  span {
+    margin: 5% 0 2% 0;
+    font-family: "Lexend Deca", sans-serif;
+    font-size: 23px;
+    color: #126ba5;
+    left: 0;
+  }
+
+  h3 {
     margin: 0 10px 0 25px;
     font-family: "Lexend Deca", sans-serif;
     font-size: 18px;
-    color: #666666;
+    color: ${(props) => props.color};
+    margin: 0 0 5% 0;
   }
 `;
 

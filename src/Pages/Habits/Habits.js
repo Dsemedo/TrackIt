@@ -1,20 +1,16 @@
 import styled from "styled-components";
-import LogoTrack from "../../Services/img/LogoTrackIt.jpg";
 import { BASE_URL } from "../../constants/urls";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import HabitCreated from "./HabitCreated";
-import colors from "../../constants/colors";
 import HabitoNovo from "./CreateHabit";
 import { useNavigate } from "react-router-dom";
 
 export default function Habits() {
   const navigate = useNavigate();
-  const { AzulClaro, AzulEscuro, Cinza, Verde, Branco } = colors;
 
   const [habitos, setHabitos] = useState([]);
   const [createHabit, setCreateHabit] = useState(false);
-
   const Letters = ["D", "S", "T", "Q", "Q", "S", "S"];
 
   useEffect(() => {
@@ -133,19 +129,6 @@ const Content = styled.div`
     font-size: 18px;
     color: #666666;
   }
-`;
-
-const ButtonAdd = styled.button`
-  background-color: #52b6ff;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 25px;
-  width: 30px;
-  height: 30px;
-  border-radius: 4.6px;
-  border: none;
 `;
 
 const TopContent = styled.div`

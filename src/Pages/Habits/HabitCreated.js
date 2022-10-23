@@ -49,24 +49,6 @@ export default function HabitCreated({ setHabitos, habitos, Letters }) {
   ));
 }
 
-const HabitoNovo = styled.div`
-  margin-bottom: 5%;
-  width: 90%;
-  height: 80px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  background-color: #f5f5f5;
-  border-radius: 3px;
-
-  h1 {
-    font-family: "Lexend Deca", sans-serif;
-    font-size: 20px;
-    color: #666666;
-  }
-`;
-
 const Habit = styled.div`
   margin-bottom: 5%;
   width: 90%;

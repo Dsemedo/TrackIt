@@ -8,10 +8,10 @@ import { useState } from "react";
 import Today from "./Pages/Today/Today";
 
 function App() {
-  const [user, setUser] = useState({});
+  const [todayHabits, setTodayHabits] = useState([]);
 
   return (
-    <UserContext.Provider value={user}>
+    <UserContext.Provider value={(todayHabits, setTodayHabits)}>
       <BrowserRouter>
         <GlobalStyle />
 
