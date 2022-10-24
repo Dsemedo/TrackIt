@@ -6,9 +6,11 @@ import { Route, Routes, BrowserRouter } from "react-router-dom";
 import UserContext from "./context/UserContext";
 import { useState } from "react";
 import Today from "./Pages/Today/Today";
+import Historic from "./Pages/Historic/Historic";
 
 function App() {
   const [todayHabits, setTodayHabits] = useState([]);
+  const [habitDone, setHabitDone] = useState([]);
 
   return (
     <UserContext.Provider value={(todayHabits, setTodayHabits)}>
@@ -20,6 +22,7 @@ function App() {
           <Route path="/cadastro" element={<Register />} />
           <Route path="/habitos" element={<Habits />} />
           <Route path="/hoje" element={<Today />} />
+          <Route path="/historico" element={<Historic />} />
         </Routes>
       </BrowserRouter>
     </UserContext.Provider>

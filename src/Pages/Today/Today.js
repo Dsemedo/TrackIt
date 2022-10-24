@@ -1,25 +1,24 @@
 import dayjs from "dayjs";
+import "dayjs/locale/pt-br";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { BASE_URL } from "../../constants/urls";
 import axios from "axios";
-import { CircularProgressbar } from "react-circular-progressbar";
-import Check from "../../Services/img/Check.png";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 import TodayList from "./TodayList";
 import colors from "../../constants/colors";
 
-export default function Today({ habitDone, setHabitDone }) {
+export default function Today() {
   const { Cinza, Verde } = colors;
   const navigate = useNavigate();
   const [todayHabits, setTodayHabits] = useState([]);
-  const percentage = 66;
+  const [habitDone, setHabitDone] = useState([]);
 
-  console.log(todayHabits);
-
-  dayjs.locale("pt-br");
-  var now = dayjs().format("dddd, DD/MM");
+  const percentage = ((habitDone.length / todayHabits.length) * 100).toFixed(2);
+  var now = dayjs().locale("pt-br").format("dddd, DD/MM");
 
   useEffect(() => {
     const config = {
@@ -33,7 +32,7 @@ export default function Today({ habitDone, setHabitDone }) {
     promise.then((res) => {
       setTodayHabits(res.data);
     });
-  }, [habitDone]);
+  }, [habitDone.length]);
 
   return (
     <Container>
@@ -43,41 +42,54 @@ export default function Today({ habitDone, setHabitDone }) {
       </Header>
       <Content>
         <InfoDay>
-          <span>{now}</span>
+          <h1>{now}</h1>
 
-          {{ habitDone }.length === 0 ? (
-            <h3 color={Cinza}>Nenhum hábito concluído ainda</h3>
+          {habitDone.length === 0 ? (
+            <span corzona={Cinza}>Nenhum hábito concluído ainda</span>
           ) : (
-            <h3 color={Verde}>{percentage}% dos hábitos concluídos</h3>
+            <span corzona={Verde}>{percentage}% dos hábitos concluídos</span>
           )}
         </InfoDay>
 
-        <TodayList todayHabits={todayHabits} setTodayHabits={setTodayHabits} />
+        <TodayList
+          key={todayHabits.length}
+          habitDone={habitDone}
+          setHabitDone={setHabitDone}
+          todayHabits={todayHabits}
+          setTodayHabits={setTodayHabits}
+        />
       </Content>
 
       <Footer>
         <h1 onClick={() => navigate("/habitos")}>Hábitos</h1>
-        {/* <ProgressBar
-          value={percentage}
-          text={`${percentage}%`}
-          strokeWidth="2px"
-        /> */}
 
-        <h1 onClick={() => navigate("/hoje")}>Hoje</h1>
+        <Barra
+          onClick={() => navigate("/hoje")}
+          value={percentage}
+          text="Hoje"
+          background
+          backgroundPadding={6}
+          styles={buildStyles({
+            backgroundColor: "#3e98c7",
+            textColor: "#fff",
+            pathColor: "#fff",
+            trailColor: "transparent",
+          })}
+        />
         <h1 onClick={() => navigate("/historico")}>Histórico</h1>
       </Footer>
     </Container>
   );
 }
 
-// const ProgressBar = styled(CircularProgressbar)`
-//   width: 90px;
-//   height: 80px;
-//   border: 1px solid red;
-//   display: flex;
-
-//   align-items: center;
-// `;
+const Barra = styled(CircularProgressbar)`
+  width: 120px;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 60px;
+  z-index: 1;
+`;
 
 const Container = styled.div`
   width: 100vw;
@@ -122,7 +134,7 @@ const InfoDay = styled.div`
   flex-direction: column;
   align-items: flex-start;
 
-  span {
+  h1 {
     margin: 5% 0 2% 0;
     font-family: "Lexend Deca", sans-serif;
     font-size: 23px;
@@ -130,11 +142,11 @@ const InfoDay = styled.div`
     left: 0;
   }
 
-  h3 {
+  span {
     margin: 0 10px 0 25px;
     font-family: "Lexend Deca", sans-serif;
     font-size: 18px;
-    color: ${(props) => props.color};
+    color: ${(props) => props.corzona};
     margin: 0 0 5% 0;
   }
 `;
@@ -143,7 +155,7 @@ const Footer = styled.div`
   background-color: #ffffff;
   width: 100%;
   height: 10%;
-  border: 2px solid blue;
+
   display: flex;
   justify-content: space-around;
   align-items: center;

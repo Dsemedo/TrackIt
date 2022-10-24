@@ -5,10 +5,13 @@ import Check from "../../Services/img/Check.png";
 import colors from "../../constants/colors";
 import axios from "axios";
 
-export default function TodayList({ todayHabits, setTodayHabits }) {
+export default function TodayList({
+  setHabitDone,
+  habitDone,
+  todayHabits,
+  setTodayHabits,
+}) {
   const { Cinza, Verde } = colors;
-  const [habitDone, setHabitDone] = useState([]);
-  console.log(habitDone);
 
   const config = {
     headers: {

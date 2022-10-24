@@ -3,10 +3,15 @@ import { BASE_URL } from "../../constants/urls";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import HabitCreated from "./HabitCreated";
-import HabitoNovo from "./CreateHabit";
 import { useNavigate } from "react-router-dom";
+import CreateHabit from "./CreateHabit";
 
-export default function Habits() {
+export default function Habits({
+  habitDone,
+  setHabitDone,
+  setTodayHabits,
+  todayHabits,
+}) {
   const navigate = useNavigate();
 
   const [habitos, setHabitos] = useState([]);
@@ -24,9 +29,8 @@ export default function Habits() {
 
     promise.then((res) => {
       setHabitos(res.data);
-      console.log(res.data);
     });
-  }, [setHabitos]);
+  }, [createHabit]);
 
   function ViewHabits() {
     return habitos.length === 0 ? (
@@ -57,7 +61,7 @@ export default function Habits() {
           <button onClick={() => setCreateHabit(!createHabit)}>+</button>
         </TopContent>
 
-        {createHabit ? <HabitoNovo Letters={Letters} /> : ""}
+        {createHabit ? <CreateHabit Letters={Letters} /> : ""}
 
         <ViewHabits />
       </Content>
@@ -75,6 +79,7 @@ const Container = styled.div`
   width: 100vw;
   height: 100vh;
   background-color: #e5e5e5;
+  overflow: scroll;
 `;
 
 const Header = styled.div`
@@ -104,7 +109,6 @@ const Footer = styled.div`
   background-color: #ffffff;
   width: 100%;
   height: 10%;
-  border: 2px solid blue;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -122,7 +126,7 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  overflow-y: scroll;
   h2 {
     margin: 0 10px 0 25px;
     font-family: "Lexend Deca", sans-serif;

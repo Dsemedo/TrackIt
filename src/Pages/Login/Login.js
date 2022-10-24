@@ -19,7 +19,6 @@ export default function Login() {
       ...log,
       [e.target.name]: e.target.value,
     });
-    console.log(log);
   }
 
   function enterUser(e) {

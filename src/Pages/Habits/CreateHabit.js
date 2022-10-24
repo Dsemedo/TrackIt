@@ -34,8 +34,7 @@ export default function CreateHabit({ Letters, createHabit, setCreateHabit }) {
         }
       )
 
-      .then(alert("Deu tudo certo!"), setCreateHabit(!createHabit))
-      .catch(alert("hoje não"));
+      .then(alert("Seu habito foi criado!"));
   }
 
   return (
@@ -79,6 +78,7 @@ const NewHabit = styled.div`
   flex-direction: column;
   background-color: #f5f5f5;
   border-radius: 3px;
+  overflow: hidden;
 
   h1 {
     font-family: "Lexend Deca", sans-serif;
@@ -106,13 +106,21 @@ const TopNewHabit = styled.div`
 `;
 
 const BottomNewHabit = styled.div`
+  width: 70%;
+  height: 30%;
   display: flex;
   align-items: center;
-  margin-left: 40%;
+  margin-left: 30%;
+
+  h2 {
+    font-family: "Lexend Deca", sans-serif;
+    font-size: 16px;
+    color: #52b6ff;
+  }
 
   button {
-    width: 84px;
-    height: 35px;
+    width: 50%;
+    height: 80%;
     background-color: #52b6ff;
     border-radius: 4px;
     border: none;
