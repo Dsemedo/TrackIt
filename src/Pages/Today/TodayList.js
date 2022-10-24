@@ -5,12 +5,7 @@ import Check from "../../Services/img/Check.png";
 import colors from "../../constants/colors";
 import axios from "axios";
 
-export default function TodayList({
-  setHabitDone,
-  habitDone,
-  todayHabits,
-  setTodayHabits,
-}) {
+export default function TodayList({ setHabitDone, habitDone, todayHabits }) {
   const { Cinza, Verde } = colors;
 
   const config = {

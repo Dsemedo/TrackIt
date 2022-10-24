@@ -5,10 +5,11 @@ import axios from "axios";
 import HabitCreated from "./HabitCreated";
 import { useNavigate } from "react-router-dom";
 import CreateHabit from "./CreateHabit";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
-export default function Habits() {
+export default function Habits({ percentage }) {
   const navigate = useNavigate();
-
   const [habitos, setHabitos] = useState([]);
   const [createHabit, setCreateHabit] = useState(false);
   const Letters = ["D", "S", "T", "Q", "Q", "S", "S"];
@@ -64,7 +65,20 @@ export default function Habits() {
 
       <Footer>
         <h1 onClick={() => navigate("/habitos")}>Hábitos</h1>
-        <h1 onClick={() => navigate("/hoje")}>Hoje</h1>
+        <div onClick={() => navigate("/hoje")}>
+          <Barra
+            value={percentage}
+            text="Hoje"
+            background
+            backgroundPadding={6}
+            styles={buildStyles({
+              backgroundColor: "#3e98c7",
+              textColor: "#fff",
+              pathColor: "#fff",
+              trailColor: "transparent",
+            })}
+          />
+        </div>
         <h1 onClick={() => navigate("/historico")}>Histórico</h1>
       </Footer>
     </Container>
@@ -75,6 +89,16 @@ const Container = styled.div`
   background-color: #e5e5e5;
 `;
 
+const Barra = styled(CircularProgressbar)`
+  width: 120px;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 60px;
+  z-index: 1;
+  cursor: pointer;
+`;
+
 const Header = styled.div`
   width: 100%;
   height: 80px;
@@ -82,6 +106,7 @@ const Header = styled.div`
   background: #126ba5;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
   display: flex;
+  justify-content: space-between;
   align-items: center;
   z-index: 1;
   position: fixed;
@@ -95,7 +120,7 @@ const Header = styled.div`
 
   img {
     border: 2px solid #ffffff;
-    margin-left: 50%;
+    margin-right: 5%;
     width: 55px;
     height: 55px;
     border-radius: 98.5px;

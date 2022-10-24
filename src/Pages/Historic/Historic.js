@@ -5,6 +5,7 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
 export default function Historic({
+  percentage,
   habitDone,
   setHabitDone,
   setTodayHabits,
@@ -28,24 +29,38 @@ export default function Historic({
 
       <Footer>
         <h1 onClick={() => navigate("/habitos")}>Hábitos</h1>
-        <Barra
-          value={0}
-          text="Hoje"
-          background
-          backgroundPadding={6}
-          styles={buildStyles({
-            backgroundColor: "#3e98c7",
-            textColor: "#fff",
-            pathColor: "#fff",
-            trailColor: "transparent",
-          })}
-        />
+
+        <div onClick={() => navigate("/hoje")}>
+          <Barra
+            value={percentage}
+            text="Hoje"
+            background
+            backgroundPadding={6}
+            styles={buildStyles({
+              backgroundColor: "#3e98c7",
+              textColor: "#fff",
+              pathColor: "#fff",
+              trailColor: "transparent",
+            })}
+          />
+        </div>
 
         <h1 onClick={() => navigate("/historico")}>Histórico</h1>
       </Footer>
     </Container>
   );
 }
+
+const Barra = styled(CircularProgressbar)`
+  width: 120px;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 60px;
+  z-index: 1;
+  cursor: pointer;
+`;
+
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
@@ -53,12 +68,16 @@ const Container = styled.div`
 `;
 
 const Header = styled.div`
-  top: 0;
   width: 100%;
-  height: 10%;
-  background-color: #126ba5;
+  height: 80px;
+  top: 0px;
+  background: #126ba5;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
   display: flex;
+  justify-content: space-between;
   align-items: center;
+  z-index: 1;
+  position: fixed;
 
   h1 {
     margin-left: 5%;
@@ -68,7 +87,8 @@ const Header = styled.div`
   }
 
   img {
-    margin-left: 50%;
+    border: 2px solid #ffffff;
+    margin-right: 5%;
     width: 55px;
     height: 55px;
     border-radius: 98.5px;
@@ -76,10 +96,12 @@ const Header = styled.div`
 `;
 
 const Content = styled.div`
-  height: 90%;
+  min-height: 50vh;
+  max-height: 100vh
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 80px;
 `;
 
 const InfoDay = styled.div`
@@ -107,27 +129,20 @@ const InfoDay = styled.div`
 `;
 
 const Footer = styled.div`
-  background-color: #ffffff;
   width: 100%;
-  height: 10%;
-
+  height: 70px;
+  bottom: 0;
+  background: #126ba5;
+  z-index: 1;
+  position: fixed;
   display: flex;
   justify-content: space-around;
   align-items: center;
 
   h1 {
-    color: #52b6ff;
+    color: #ffffff;
     font-family: "Lexend Deca", sans-serif;
     font-size: 18px;
     cursor: pointer;
   }
-`;
-
-const Barra = styled(CircularProgressbar)`
-  width: 120px;
-  height: 110px;
-  display: flex;
-  align-items: center;
-  margin-bottom: 60px;
-  z-index: 1;
 `;

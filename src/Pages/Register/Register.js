@@ -23,7 +23,6 @@ export default function Register() {
       ...forms,
       [e.target.name]: e.target.value,
     });
-    console.log(forms);
   }
 
   function submitUser(e) {
