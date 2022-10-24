@@ -12,6 +12,8 @@ import TodayList from "./TodayList";
 import colors from "../../constants/colors";
 
 export default function Today() {
+  // const { setProgress } = useContext(UserProvider);
+  // const { progress } = useContext(UserProvider);
   const { Cinza, Verde } = colors;
   const navigate = useNavigate();
   const [todayHabits, setTodayHabits] = useState([]);
@@ -31,8 +33,9 @@ export default function Today() {
 
     promise.then((res) => {
       setTodayHabits(res.data);
+      console.log(res.data);
     });
-  }, [habitDone.length]);
+  }, [habitDone]);
 
   return (
     <Container>
@@ -152,16 +155,15 @@ const InfoDay = styled.div`
 `;
 
 const Footer = styled.div`
-  background-color: #ffffff;
+  background-color: #126ba5;
   width: 100%;
   height: 10%;
-
   display: flex;
   justify-content: space-around;
   align-items: center;
 
   h1 {
-    color: #52b6ff;
+    color: #ffffff;
     font-family: "Lexend Deca", sans-serif;
     font-size: 18px;
     cursor: pointer;

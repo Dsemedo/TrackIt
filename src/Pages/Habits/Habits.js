@@ -5,6 +5,7 @@ import axios from "axios";
 import HabitCreated from "./HabitCreated";
 import { useNavigate } from "react-router-dom";
 import CreateHabit from "./CreateHabit";
+import Loading from "../../Services/img/loading.gif";
 
 export default function Habits({
   habitDone,
@@ -55,6 +56,7 @@ export default function Habits({
         <h1>TrackIt</h1>
         <img alt="foto de perfil" src={localStorage.getItem("image")} />
       </Header>
+
       <Content>
         <TopContent>
           <h1>Meus Hábitos</h1>
@@ -76,19 +78,27 @@ export default function Habits({
 }
 
 const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
   background-color: #e5e5e5;
-  overflow: scroll;
 `;
 
 const Header = styled.div`
-  top: 0;
+  /* top: 0;
   width: 100%;
-  height: 10%;
+  height: 80px;
   background-color: #126ba5;
   display: flex;
+  align-items: center; */
+
+  width: 100%;
+  height: 80px;
+  top: 0px;
+  background: #126ba5;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+  display: flex;
+  justify-content: space-between;
   align-items: center;
+  z-index: 1;
+  position: fixed;
 
   h1 {
     margin-left: 5%;
@@ -98,6 +108,7 @@ const Header = styled.div`
   }
 
   img {
+    border: 2px solid #ffffff;
     margin-left: 50%;
     width: 55px;
     height: 55px;
@@ -105,16 +116,26 @@ const Header = styled.div`
   }
 `;
 
-const Footer = styled.div`
-  background-color: #ffffff;
+const Footer = styled.footer`
+  /* background-color: #126ba5;
   width: 100%;
-  height: 10%;
+  height: 70px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center; */
+
+  width: 100%;
+  height: 70px;
+  bottom: 0;
+  background: #126ba5;
+  z-index: 1;
+  position: fixed;
   display: flex;
   justify-content: space-around;
   align-items: center;
 
   h1 {
-    color: #52b6ff;
+    color: #ffffff;
     font-family: "Lexend Deca", sans-serif;
     font-size: 18px;
     cursor: pointer;
@@ -122,11 +143,17 @@ const Footer = styled.div`
 `;
 
 const Content = styled.div`
-  height: 90%;
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-y: scroll; */
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 90vh;
+  margin-top: 70px;
   overflow-y: scroll;
+
   h2 {
     margin: 0 10px 0 25px;
     font-family: "Lexend Deca", sans-serif;
@@ -136,7 +163,8 @@ const Content = styled.div`
 `;
 
 const TopContent = styled.div`
-  height: 10%;
+  top: 0;
+  height: 80px;
   width: 100%;
   display: flex;
   flex-direction: row;

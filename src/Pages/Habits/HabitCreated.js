@@ -52,7 +52,7 @@ export default function HabitCreated({ setHabitos, habitos, Letters }) {
 const Habit = styled.div`
   margin-bottom: 5%;
   width: 90%;
-  height: 12%;
+  height: 110px;
   display: flex;
   justify-content: center;
   align-items: center;

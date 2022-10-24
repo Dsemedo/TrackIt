@@ -3,7 +3,7 @@ import Register from "./Pages/Register/Register";
 import Habits from "./Pages/Habits/Habits";
 import GlobalStyle from "./Services/GlobalStyle";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
-import UserContext from "./context/UserContext";
+import UserProvider from "./context/User";
 import { useState } from "react";
 import Today from "./Pages/Today/Today";
 import Historic from "./Pages/Historic/Historic";
@@ -13,10 +13,9 @@ function App() {
   const [habitDone, setHabitDone] = useState([]);
 
   return (
-    <UserContext.Provider value={(todayHabits, setTodayHabits)}>
-      <BrowserRouter>
-        <GlobalStyle />
-
+    <BrowserRouter>
+      <GlobalStyle />
+      <UserProvider>
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/cadastro" element={<Register />} />
@@ -24,8 +23,8 @@ function App() {
           <Route path="/hoje" element={<Today />} />
           <Route path="/historico" element={<Historic />} />
         </Routes>
-      </BrowserRouter>
-    </UserContext.Provider>
+      </UserProvider>
+    </BrowserRouter>
   );
 }
 

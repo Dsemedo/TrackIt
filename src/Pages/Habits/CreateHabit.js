@@ -34,7 +34,11 @@ export default function CreateHabit({ Letters, createHabit, setCreateHabit }) {
         }
       )
 
-      .then(alert("Seu habito foi criado!"));
+      .then((res) => {
+        console.log(res.data);
+        console.log("Seu habito foi criado!");
+        setCreateHabit(!createHabit);
+      });
   }
 
   return (
