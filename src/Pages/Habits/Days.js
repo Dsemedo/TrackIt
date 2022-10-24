@@ -3,7 +3,13 @@ import { useState } from "react";
 import styled from "styled-components";
 import colors from "../../constants/colors";
 
-export default function Days({ setClickedDay, clickedDay, letter, index }) {
+export default function Days({
+  setClickedDay,
+  clickedDay,
+  letter,
+  index,
+  created,
+}) {
   const { Cinza, Branco } = colors;
 
   const [colorido, setColorido] = useState(false);
@@ -25,6 +31,7 @@ export default function Days({ setClickedDay, clickedDay, letter, index }) {
 
   return (
     <Day
+      disabled={created ? true : false}
       key={index}
       onClick={() => changeColor(index)}
       backColor={clickedDay.includes(index) ? Cinza : Branco}

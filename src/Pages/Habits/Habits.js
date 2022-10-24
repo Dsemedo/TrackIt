@@ -5,14 +5,8 @@ import axios from "axios";
 import HabitCreated from "./HabitCreated";
 import { useNavigate } from "react-router-dom";
 import CreateHabit from "./CreateHabit";
-import Loading from "../../Services/img/loading.gif";
 
-export default function Habits({
-  habitDone,
-  setHabitDone,
-  setTodayHabits,
-  todayHabits,
-}) {
+export default function Habits() {
   const navigate = useNavigate();
 
   const [habitos, setHabitos] = useState([]);
@@ -31,7 +25,7 @@ export default function Habits({
     promise.then((res) => {
       setHabitos(res.data);
     });
-  }, [createHabit]);
+  }, [habitos]);
 
   function ViewHabits() {
     return habitos.length === 0 ? (
@@ -82,20 +76,12 @@ const Container = styled.div`
 `;
 
 const Header = styled.div`
-  /* top: 0;
-  width: 100%;
-  height: 80px;
-  background-color: #126ba5;
-  display: flex;
-  align-items: center; */
-
   width: 100%;
   height: 80px;
   top: 0px;
   background: #126ba5;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
   display: flex;
-  justify-content: space-between;
   align-items: center;
   z-index: 1;
   position: fixed;
@@ -116,14 +102,7 @@ const Header = styled.div`
   }
 `;
 
-const Footer = styled.footer`
-  /* background-color: #126ba5;
-  width: 100%;
-  height: 70px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center; */
-
+const Footer = styled.div`
   width: 100%;
   height: 70px;
   bottom: 0;
@@ -143,15 +122,12 @@ const Footer = styled.footer`
 `;
 
 const Content = styled.div`
-  /* display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow-y: scroll; */
   display: flex;
   align-items: center;
   flex-direction: column;
-  height: 90vh;
+  min-height: 90vh;
   margin-top: 70px;
+  margin-bottom: 60px;
   overflow-y: scroll;
 
   h2 {

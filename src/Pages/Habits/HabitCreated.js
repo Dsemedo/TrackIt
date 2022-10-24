@@ -64,6 +64,8 @@ const Habit = styled.div`
     font-family: "Lexend Deca", sans-serif;
     font-size: 20px;
     color: #666666;
+    word-break: break-all;
+    width: 90%;
   }
 `;
 

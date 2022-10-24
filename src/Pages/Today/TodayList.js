@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { BASE_URL } from "../../constants/urls";
 import Check from "../../Services/img/Check.png";
@@ -22,7 +22,7 @@ export default function TodayList({
   function CheckHabit(id, done) {
     let listDone = habitDone;
 
-    if (listDone.includes(id)) {
+    if (listDone.includes(id) || done) {
       listDone = listDone.filter((idAvaliado) => idAvaliado !== id);
       setHabitDone(listDone);
     } else {
@@ -32,12 +32,14 @@ export default function TodayList({
     if (habitDone.includes(id) || done) {
       axios
         .post(`${BASE_URL}/habits/${id}/uncheck`, { habitDone }, config)
-
         .then(console.log("Desmarcado!"));
     } else {
       axios
         .post(`${BASE_URL}/habits/${id}/check`, { habitDone }, config)
-        .then(console.log("Deu tudo certo, marcado!"));
+        .then(
+          console.log("Deu tudo certo, marcado!"),
+          setHabitDone([...habitDone, id])
+        );
     }
   }
 
@@ -79,6 +81,10 @@ const LeftSide = styled.div`
   justify-content: space-around;
   align-items: flex-start;
   flex-direction: column;
+
+  span {
+    color: ${(props) => props.color};
+  }
 
   h1 {
     font-family: "Lexend Deca", sans-serif;

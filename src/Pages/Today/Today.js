@@ -1,20 +1,15 @@
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import { BASE_URL } from "../../constants/urls";
 import axios from "axios";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import TodayList from "./TodayList";
-import colors from "../../constants/colors";
 
 export default function Today() {
-  // const { setProgress } = useContext(UserProvider);
-  // const { progress } = useContext(UserProvider);
-  const { Cinza, Verde } = colors;
   const navigate = useNavigate();
   const [todayHabits, setTodayHabits] = useState([]);
   const [habitDone, setHabitDone] = useState([]);
@@ -28,12 +23,11 @@ export default function Today() {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     };
-
     const promise = axios.get(`${BASE_URL}/habits/today`, config);
-
     promise.then((res) => {
       setTodayHabits(res.data);
-      console.log(res.data);
+      localStorage.getItem("doneHabits");
+      console.log(localStorage);
     });
   }, [habitDone]);
 
@@ -48,9 +42,9 @@ export default function Today() {
           <h1>{now}</h1>
 
           {habitDone.length === 0 ? (
-            <span corzona={Cinza}>Nenhum hábito concluído ainda</span>
+            <p>Nenhum hábito concluído ainda</p>
           ) : (
-            <span corzona={Verde}>{percentage}% dos hábitos concluídos</span>
+            <span>{percentage}% dos hábitos concluídos</span>
           )}
         </InfoDay>
 
@@ -100,34 +94,13 @@ const Container = styled.div`
   background-color: #e5e5e5;
 `;
 
-const Header = styled.div`
-  top: 0;
-  width: 100%;
-  height: 10%;
-  background-color: #126ba5;
-  display: flex;
-  align-items: center;
-
-  h1 {
-    margin-left: 5%;
-    font-family: "Playball", cursive;
-    font-size: 38px;
-    color: white;
-  }
-
-  img {
-    margin-left: 50%;
-    width: 55px;
-    height: 55px;
-    border-radius: 98.5px;
-  }
-`;
-
 const Content = styled.div`
-  height: 90%;
+  min-height: 90vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 80px;
+  margin-bottom: 70px;
 `;
 
 const InfoDay = styled.div`
@@ -145,19 +118,56 @@ const InfoDay = styled.div`
     left: 0;
   }
 
+  p {
+    margin: 0 10px 0 25px;
+    font-family: "Lexend Deca", sans-serif;
+    font-size: 18px;
+    color: #bababa;
+    margin: 0 0 5% 0;
+  }
+
   span {
     margin: 0 10px 0 25px;
     font-family: "Lexend Deca", sans-serif;
     font-size: 18px;
-    color: ${(props) => props.corzona};
+    color: #8fc549;
     margin: 0 0 5% 0;
   }
 `;
 
-const Footer = styled.div`
-  background-color: #126ba5;
+const Header = styled.div`
   width: 100%;
-  height: 10%;
+  height: 80px;
+  top: 0px;
+  background: #126ba5;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  z-index: 1;
+  position: fixed;
+
+  h1 {
+    margin-left: 5%;
+    font-family: "Playball", cursive;
+    font-size: 38px;
+    color: white;
+  }
+
+  img {
+    border: 2px solid #ffffff;
+    margin-left: 50%;
+    width: 55px;
+    height: 55px;
+    border-radius: 98.5px;
+  }
+`;
+
+const Footer = styled.div`
+  width: 100%;
+  height: 70px;
+  bottom: 0;
+  background: #126ba5;
+  position: fixed;
   display: flex;
   justify-content: space-around;
   align-items: center;

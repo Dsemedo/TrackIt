@@ -4,10 +4,11 @@ import { useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../../constants/urls";
 import Day from "./Days";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function CreateHabit({ Letters, createHabit, setCreateHabit }) {
   const [clickedDay, setClickedDay] = useState([]);
-
+  const [created, setCreated] = useState(false);
   const [habitName, setHabitName] = useState("");
 
   function handleRegister(e) {
@@ -15,12 +16,10 @@ export default function CreateHabit({ Letters, createHabit, setCreateHabit }) {
       ...habitName,
       [e.target.name]: e.target.value,
     });
-
-    console.log(habitName.name);
-    console.log(clickedDay);
   }
 
   function submitHabit(e) {
+    setCreated(true);
     e.preventDefault();
 
     axios
@@ -35,15 +34,18 @@ export default function CreateHabit({ Letters, createHabit, setCreateHabit }) {
       )
 
       .then((res) => {
+        setCreateHabit(false);
         console.log(res.data);
         console.log("Seu habito foi criado!");
-        setCreateHabit(!createHabit);
-      });
+      })
+      .catch((err) => alert(err.response));
   }
 
   return (
     <NewHabit>
       <input
+        disabled={created ? true : false}
+        maxLength={25}
         name="name"
         onChange={handleRegister}
         type="text"
@@ -53,6 +55,7 @@ export default function CreateHabit({ Letters, createHabit, setCreateHabit }) {
       <TopNewHabit>
         {Letters.map((letter, index) => (
           <Day
+            created={created}
             key={index}
             letter={letter}
             index={index}
@@ -66,7 +69,22 @@ export default function CreateHabit({ Letters, createHabit, setCreateHabit }) {
 
       <BottomNewHabit>
         <h2>Cancelar</h2>
-        <button onClick={submitHabit}>Salvar</button>
+        <button onClick={submitHabit}>
+          {created ? (
+            <ThreeDots
+              height="80"
+              width="80"
+              radius="9"
+              color="#f5f5f5"
+              ariaLabel="three-dots-loading"
+              wrapperStyle={{}}
+              wrapperClassName=""
+              visible={true}
+            />
+          ) : (
+            "Salvar"
+          )}
+        </button>
       </BottomNewHabit>
     </NewHabit>
   );
@@ -131,5 +149,8 @@ const BottomNewHabit = styled.div`
     color: white;
     font-size: 18px;
     font-family: "Lexend Deca", sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 `;

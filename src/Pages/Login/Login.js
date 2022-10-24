@@ -1,13 +1,14 @@
 import styled from "styled-components";
 import LogoTrack from "../../Services/img/LogoTrackIt.jpg";
 import { Link, useNavigate } from "react-router-dom";
-// import { ThreeDots } from "react-loader-spinner";
+import { ThreeDots } from "react-loader-spinner";
 import { BASE_URL } from "../../constants/urls";
 import { useState } from "react";
 import axios from "axios";
 
 export default function Login() {
   const navigate = useNavigate();
+  const [logged, setLogged] = useState(false);
 
   const [log, setLog] = useState({
     email: "",
@@ -22,6 +23,7 @@ export default function Login() {
   }
 
   function enterUser(e) {
+    setLogged(true);
     e.preventDefault();
 
     axios
@@ -30,18 +32,21 @@ export default function Login() {
       .then((response) => {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("image", response.data.image);
-        navigate("/habitos");
+        navigate("/hoje");
       })
       .catch(() => {
         alert("Email e/ou senha inválidos");
+        setLogged(false);
       });
   }
 
   return (
     <>
-      <Form onSubmit={enterUser}>
+      <Form>
         <Logo alt="LogoTrackIt" src={LogoTrack} />
+
         <input
+          disabled={logged ? true : false}
           name="email"
           onChange={handleLogin}
           type="email"
@@ -49,13 +54,33 @@ export default function Login() {
           value={log.email}
         />
         <input
+          disabled={logged ? true : false}
           name="password"
           onChange={handleLogin}
           type="password"
           placeholder="senha"
           value={log.password}
         />
-        <ButtLogin type="submit">Entrar</ButtLogin>
+        <ButtLogin
+          type="submit"
+          onClick={enterUser}
+          disabled={logged ? true : false}
+        >
+          {logged ? (
+            <ThreeDots
+              height="80"
+              width="80"
+              radius="9"
+              color="#f5f5f5"
+              ariaLabel="three-dots-loading"
+              wrapperStyle={{}}
+              wrapperClassName=""
+              visible={true}
+            />
+          ) : (
+            "Entrar"
+          )}
+        </ButtLogin>
         <StyledLink to="/cadastro">Não tem uma conta? Cadastre-se!</StyledLink>
       </Form>
     </>

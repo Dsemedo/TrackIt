@@ -4,14 +4,10 @@ import Habits from "./Pages/Habits/Habits";
 import GlobalStyle from "./Services/GlobalStyle";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import UserProvider from "./context/User";
-import { useState } from "react";
 import Today from "./Pages/Today/Today";
 import Historic from "./Pages/Historic/Historic";
 
 function App() {
-  const [todayHabits, setTodayHabits] = useState([]);
-  const [habitDone, setHabitDone] = useState([]);
-
   return (
     <BrowserRouter>
       <GlobalStyle />
